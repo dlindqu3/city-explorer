@@ -6,6 +6,7 @@ import Results from './Results';
 import Header from './Header';
 import axios from 'axios';
 import Errormodal from './Errormodal';
+import { Last } from 'react-bootstrap/esm/PageItem';
 
 class App extends React.Component {
   constructor(props){
@@ -16,6 +17,7 @@ class App extends React.Component {
       error: false,
       errorMessage:'',
       showModal: false,
+      weather: []
     };
   };
   hideModal= () => {
@@ -48,6 +50,19 @@ class App extends React.Component {
     console.log(this.state.errorMessage);
   }
   }
+
+handleGetWeather = async () => {
+try {
+  const weatherQuery = await axios.get(`${process.env.REACT_APP_SERVER}/weather-data`, {params: {lon: this.state.cityData.lon, lat: this.state.cityData.lat}});
+  this.setState({
+    weather: weatherQuery
+  }) 
+  console.log(this.state.weather); 
+ } catch (error) {
+  console.log(error);
+}
+}
+
   render(){
     let cityResults = this.state.cityData.map((city, index) => {
       console.log(index)
