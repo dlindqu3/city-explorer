@@ -8,8 +8,10 @@ Getting Started
 Architecture
 WRRC
 
-- The user's computer (com in the image) sends a REQUEST to the API endpoint, which contains a URL, access token, and query 
-- The server (ser in the image) then sends back a response that holds data
+![wrrc image here](./public/wrrc-lab-6.png)
+
+- The user's computer sends a REQUEST to the API endpoint, which contains a URL, access token, and query 
+- The external server then sends back a response that holds data
 
 WRRC Functions:
 
