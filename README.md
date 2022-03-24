@@ -8,14 +8,11 @@ Getting Started
 Architecture
 WRRC
 
-- The user's computer (com in the image) sends a REQUEST to the API endpoint, which contains a URL, access token, and query 
-- The server (ser in the image) then sends back a response that holds data
+![wrrc image here](./public/wrrc-lab-6.png)
 
-WRRC Functions:
+- The user's computer sends a REQUEST to the locationIQ API endpoint, which contains a URL, access token, and query 
+- The external API server/endpoint then sends back a response that holds data
 
-To handle input and put input in state
-Use state data to make an asycronous Axios call
-Change Log
 V.1.0.0 - Search bar functionality and map population.
 
 Credit and Collaborations
