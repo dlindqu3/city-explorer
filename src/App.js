@@ -6,13 +6,13 @@ import Results from './Results';
 import Header from './Header';
 import axios from 'axios';
 import Errormodal from './Errormodal';
-import { Last } from 'react-bootstrap/esm/PageItem';
+// import { Last } from 'react-bootstrap/esm/PageItem';
 
 class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      cityData: [],
+      cityData: null,
       mapurl: '',
       error: false,
       errorMessage:'',
@@ -37,7 +37,7 @@ class App extends React.Component {
   
 
   this.setState({
-    cityData: cityData.data
+    cityData: cityData.data[0],
   });
   console.log(this.state.cityData);
   } catch (error) {
@@ -64,16 +64,6 @@ try {
 }
 
   render(){
-    let cityResults = this.state.cityData.map((city, index) => {
-      console.log(index)
-      return(
-      <Results
-      key={index}
-      city={city}
-      />
-      );
-    }
-  );
   return (
     <>
     <Header/>
@@ -81,7 +71,14 @@ try {
     handleCityCall={this.handleCityCall}
     />
     <main>
-    {cityResults}
+    
+    {this.state.cityData ? 
+    <Results
+      // key={index}
+      city={this.state.cityData}
+      />
+      : <></>
+    }
     </main>
     <Errormodal
     error={this.state.error}
