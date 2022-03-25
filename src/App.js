@@ -13,11 +13,13 @@ class App extends React.Component {
     super(props);
     this.state = {
       cityData: null,
+      cityName: '', 
       mapurl: '',
       error: false,
       errorMessage:'',
       showModal: false,
-      weather: []
+      weather: [], 
+      movieData: [], 
     };
   };
   hideModal= () => {
@@ -31,15 +33,15 @@ class App extends React.Component {
     })
   }
   handleCityCall = async (city) => {
-    console.log(process.env.REACT_APP_LOCATIONIQ_API_KEY);
    try{
     let cityData = await axios.get(`https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${city}&format=json`);
   
 
   this.setState({
     cityData: cityData.data[0],
+    cityName: city,
   });
-  console.log(this.state.cityData);
+  // console.log('this.state.cityName: ', this.state.cityName);
   } catch (error) {
     console.log('error', error.response);
     this.setState({
@@ -53,14 +55,34 @@ class App extends React.Component {
 
 handleGetWeather = async () => {
 try {
-  const weatherQuery = await axios.get(`${process.env.REACT_APP_SERVER}/weather-data`, {params: {lon: this.state.cityData.lon, lat: this.state.cityData.lat}});
+  // console.log(process.env.REACT_APP_SERVER); 
+  const weatherQuery = await axios.get(`${process.env.REACT_APP_SERVER}/weather`, {params: {lon: this.state.cityData.lon, lat: this.state.cityData.lat}});
+
+  let weatherArray = weatherQuery.data.slice(0,3);
+
   this.setState({
-    weather: weatherQuery
+    weather: weatherArray
   }) 
-  console.log(this.state.weather); 
+  // console.log(this.state.weather); 
  } catch (error) {
   console.log(error);
 }
+}
+
+handleGetMovies = async () => {
+  let url = `${process.env.REACT_APP_SERVER}/movies?cityName=${this.state.cityName}`;
+  console.log(url); 
+
+  try {
+    const movieQuery = await axios.get(url); 
+    this.setState({
+      movieData: movieQuery.data,
+    }) 
+    // console.log(this.state.movieData); 
+    console.log(movieQuery.data);
+  } catch (error){
+    console.log(error)
+  } 
 }
 
   render(){
@@ -69,6 +91,8 @@ try {
     <Header/>
     <Cityform
     handleCityCall={this.handleCityCall}
+    handleGetWeather={this.handleGetWeather}
+    handleGetMovies={this.handleGetMovies}
     />
     <main>
     
@@ -79,6 +103,21 @@ try {
       />
       : <></>
     }
+    
+    <ul>
+    {this.state.weather.map((WeatherDay, idx) => (
+      <li key={idx}>{WeatherDay.date}: {WeatherDay.description}</li>
+    ))}
+    </ul>
+
+    <br></br>
+
+    <ol>
+      {this.state.movieData.map((movie, idx) => (
+        <li key={idx}>{movie.title}</li>
+      ))}
+    </ol>
+    
     </main>
     <Errormodal
     error={this.state.error}
