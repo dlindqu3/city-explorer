@@ -11,8 +11,16 @@ class Cityform extends React.Component {
       searchQuery:'Seattle',
     };
   };
-  searchCity = () => {
-    this.props.handleCityCall(this.state.searchQuery);}
+  // searchCity = () => {
+  //   this.props.handleCityCall(this.state.searchQuery);}
+
+handleAllCalls = async () => {
+  await this.props.handleCityCall(this.state.searchQuery);
+  await this.props.handleGetWeather(); 
+  await this.props.handleGetMovies(); 
+}
+
+
 render(){
   return (
     <>
@@ -20,7 +28,7 @@ render(){
     <FormGroup>
       <Form.Label>Pick a City:</Form.Label>
       <Form.Control type="text" onChange={(e) => this.setState({searchQuery: e.target.value})} placeholder="search for a city" />
-      <Button onClick={this.searchCity}>Explore!</Button>
+      <Button onClick={this.handleAllCalls}>Explore!</Button>
     </FormGroup>
     </Form>       
     </>
