@@ -6,6 +6,7 @@ import Results from './Results';
 import Header from './Header';
 import axios from 'axios';
 import Errormodal from './Errormodal';
+import ListGroup from 'react-bootstrap/ListGroup';
 // import { Last } from 'react-bootstrap/esm/PageItem';
 
 class App extends React.Component {
@@ -104,11 +105,21 @@ handleGetMovies = async () => {
       : <></>
     }
     
-    <ul>
+    <ListGroup>
+      {
+        this.state.weather.map((weatherDay, idx) => (
+          <ListGroup.Item key={idx}>{weatherDay.date}: {weatherDay.description}</ListGroup.Item>
+        ))
+      }
+    </ListGroup>
+
+
+
+    {/* <ul>
     {this.state.weather.map((WeatherDay, idx) => (
       <li key={idx}>{WeatherDay.date}: {WeatherDay.description}</li>
     ))}
-    </ul>
+    </ul> */}
 
     <br></br>
 
