@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Cityform from './Cityform';
 import Results from './Results';
 import Header from './Header';
+import Movies from './Movies.js'; 
 import axios from 'axios';
 import Errormodal from './Errormodal';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -123,11 +124,16 @@ handleGetMovies = async () => {
 
     <br></br>
 
-    <ol>
+    {/* <ol>
       {this.state.movieData.map((movie, idx) => (
         <li key={idx}>{movie.title}</li>
       ))}
-    </ol>
+    </ol> */}
+
+    <Movies
+      movies={this.state.movieData}
+    >
+    </Movies>
     
     </main>
     <Errormodal
